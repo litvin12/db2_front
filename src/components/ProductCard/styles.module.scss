@@ -1,0 +1,35 @@
+.containerCard {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+.item {
+    display: flex;
+    flex-direction: column;
+    width: 190px;
+    min-height: 290px;
+    border: 1px solid;
+    justify-content: center;
+    padding: 5px;
+    background-color: white;
+    margin-top: 15px;
+}
+.descr {
+    display: grid;
+    margin-top: 15px;
+    h3 {
+        font-size: 15px;
+    }
+    span {
+        opacity: 0.7;
+    }
+    button {
+        margin-top: 21px;
+        margin-right: 7px;
+        justify-self: flex-end;
+        border-radius: 7px;
+        padding: 5px;
+        background-color: rgb(200, 231, 192);
+        border: 0;
+    }
+}
