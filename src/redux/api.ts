@@ -27,7 +27,6 @@ export const api = createApi({
             query: () => ({
                 url: '/wholesale-orders',
                 method: 'GET',
-                mode: 'no-cors'
             }),
             providesTags: ['Product']
         }),
@@ -35,10 +34,9 @@ export const api = createApi({
             query: (body) => ({
                 url: '/wholesale-orders',
                 method: 'POST',
-                mode: 'no-cors',
-                body: new URLSearchParams(body as any).toString(),
+                body,
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'application/json'
                 }
             }),
             invalidatesTags: ['Product']
