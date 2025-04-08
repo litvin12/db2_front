@@ -30,6 +30,13 @@ export const api = createApi({
             }),
             providesTags: ['Product']
         }),
+        getMedic: builder.query<wholeSaleOrders[], void> ({
+            query: () => ({
+                url: '/medicines',
+                method: 'GET',
+            }),
+            providesTags: ['Product']
+        }),
         addWholeSaleOrder: builder.mutation<wholeSaleOrders, wholeSaleOrdersP> ({
             query: (body) => ({
                 url: '/wholesale-orders',
@@ -46,4 +53,5 @@ export const api = createApi({
 export const {
     useGetWholeSaleOrdersQuery,
     useAddWholeSaleOrderMutation,
+    useGetMedicQuery,
 } = api;
