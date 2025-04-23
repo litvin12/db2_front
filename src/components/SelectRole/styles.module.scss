@@ -51,3 +51,12 @@ button {
     margin-left: auto;
     margin-bottom: 0;
 }
+.buttonControl {
+    display: flex;
+    width: 100%;
+    margin-bottom: 10px;
+    .buttonBack {
+        justify-self: flex-start;
+        margin: 0;
+    }
+}

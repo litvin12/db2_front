@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState = {
     showModal: true,
+    
 }
 
 const userSlice = createSlice({

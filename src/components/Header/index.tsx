@@ -19,10 +19,8 @@ export const Header = () => {
             </Link>
             <div className={styles.dataBlock}>
                 
-                {/* <Link to='/profile'> */}
                     <UserOutlined
                     onClick={onClickProfile}/>
-                {/* </Link> */}
                 <ShoppingCartOutlined/>
             </div>
         </div>

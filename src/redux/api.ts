@@ -16,6 +16,17 @@ type wholeSaleOrdersP = {
     updatedAt: string;
 }
 
+export type user = {
+    id: number;
+    firstName: string;
+    secondName: string;
+    address: string;
+    phoneNumber: string;
+    role: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
 export const api = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({
@@ -47,11 +58,20 @@ export const api = createApi({
                 }
             }),
             invalidatesTags: ['Product']
+        }),
+        getUser: builder.query<user[], void> ({
+            query: () => ({
+                url: '/users',
+                method: 'GET',
+            }),
+            providesTags: ['Product']
         })
+
     })
 })
 export const {
     useGetWholeSaleOrdersQuery,
     useAddWholeSaleOrderMutation,
     useGetMedicQuery,
+    useGetUserQuery,
 } = api;
