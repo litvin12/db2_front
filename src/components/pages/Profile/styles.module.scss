@@ -1,4 +1,4 @@
-.overlay {
+.overlay1 {
     position: fixed;
     top: 0;
     left: 0;
@@ -13,7 +13,7 @@
 .modal {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    // align-items: center;
     width: 300px;
     height: 300px;
     background-color: white;
@@ -23,25 +23,9 @@
 .select {
     font-size: 25px;
     margin-top: 0;
+    align-self: center;
 }
-.selectedRole {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    list-style: none;
-    width: 50%;
-    height: 70%;
-    gap: 7px;
-    li {
-        opacity: 0.5;
-        transition: 0,3s ease-in-out;
-        &:hover {
-            cursor: pointer;
-            opacity: 1;
-        }
-    }
-}
+
 button {
     background-color: transparent;
     border: 0;
@@ -55,8 +39,28 @@ button {
     display: flex;
     width: 100%;
     margin-bottom: 10px;
-    .buttonBack {
-        justify-self: flex-start;
-        margin: 0;
+}
+
+.userData {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;    
+    margin-top: 15px;
+}
+.exit {
+    align-self: center;
+    margin: 0;
+    margin-top: auto;
+    margin-bottom: 15px;
+    background-color: rgb(203, 55, 55);
+    padding: 5px;
+    border-radius: 9px;
+    color: rgb(22, 19, 19);
+    font-size: 11px;
+    opacity: 0.7;
+    transition: 0.3s ease-in-out;
+    &:hover {
+        cursor: pointer;
+        opacity: 1;
     }
 }

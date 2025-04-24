@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './styles.module.scss';
 import { useGetUserQuery } from '../../redux/api';
 import { user } from '../../redux/api';
+import { AuthorizationSucces } from '../AuthorizationSucces';
 const roleList = ["Пользователь", "Фармацевт"]
 
 type propsModal = {
@@ -14,10 +15,11 @@ type propsModal = {
 export const SelectRole = ({ onClickClose }: propsModal) => {
     const [userRole, setUserRole] = React.useState<user[]>([]);
     const [selectedRole, setSelectedRole] = React.useState(false);
+    const [showSucces, setShowSucces] = React.useState(false);
     const { data, isLoading } = useGetUserQuery();
 
     return (
-        <div className={styles.overlay}>
+        <div className={styles.overlay1}>
             <div className={styles.modal}>
                 <div className={styles.buttonControl}>
                 {selectedRole && <button className={styles.buttonBack} onClick={() => setSelectedRole(false)}>Назад</button>}
@@ -29,9 +31,8 @@ export const SelectRole = ({ onClickClose }: propsModal) => {
                     userRole.map(user => (
                         <li key={user.id}
                         onClick={() => {
-                            localStorage.setItem('user', JSON.stringify(user));
-                            console.log('Сохранено:', JSON.parse(localStorage.getItem('user') || '{}'));
-                            onClickClose();
+                            localStorage.setItem('user', JSON.stringify(user));   
+                            setShowSucces(true);                         
                         }}>{
                             user.firstName
                         }</li>
@@ -53,7 +54,9 @@ export const SelectRole = ({ onClickClose }: propsModal) => {
                     ))
                 }
                 </div>
-                
+                {showSucces && <AuthorizationSucces
+                onClickClose={(onClickClose)}
+                />}                
             </div>
         </div>
     )

@@ -1,4 +1,6 @@
 import { setShowModal } from '../../redux/userSlice';
+import { setShowModalProfile } from '../../redux/userSlice';
+import { Profile } from '../pages/Profile'
 import { RootState } from '../../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -12,6 +14,9 @@ export const Header = () => {
     const onClickProfile = () => {
         dispatch(setShowModal(true));
     }
+    const onClickProfile2 = () => {
+        dispatch(setShowModalProfile(true));
+    }
     return (
         <div className={styles.container}>
             <Link to='/'>
@@ -20,7 +25,7 @@ export const Header = () => {
             <div className={styles.dataBlock}>
                 
                     <UserOutlined
-                    onClick={onClickProfile}/>
+                    onClick={localStorage.getItem('user') === null ? onClickProfile : onClickProfile2}/>
                 <ShoppingCartOutlined/>
             </div>
         </div>
