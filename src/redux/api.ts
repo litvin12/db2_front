@@ -26,7 +26,17 @@ export type user = {
     createdAt: string;
     updatedAt: string;
 }
-
+export type medicines = {
+    id: number;
+    name: string;
+    type: string;
+    recipeId: number;
+    criticalNorm: number;
+    quantity: number;
+    price: number;
+    createdAt: string;
+    updatedAt: string;
+}
 export const api = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({
@@ -65,7 +75,14 @@ export const api = createApi({
                 method: 'GET',
             }),
             providesTags: ['Product']
-        })
+        }),
+        getMedicines: builder.query<medicines[], void> ({
+            query: () => ({
+                url: '/medicines',
+                method: 'GET',
+            }),
+            providesTags: ['Product']
+        }),
 
     })
 })
@@ -74,4 +91,5 @@ export const {
     useAddWholeSaleOrderMutation,
     useGetMedicQuery,
     useGetUserQuery,
+    useGetMedicinesQuery,
 } = api;

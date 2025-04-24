@@ -8,8 +8,10 @@ import { Search } from '../../Search';
 import { Sort } from '../../Sort';
 import { SelectRole } from '../../SelectRole';
 import { Profile } from '../Profile';
+import { useGetMedicinesQuery } from '../../../redux/api';
 import styles from './styles.module.scss';
 export const Home = () => {
+    const { data } = useGetMedicinesQuery();
     const dispatch = useDispatch();
     const { showModal } = useSelector((state: RootState) => state.user);
     const { showModalProfile } = useSelector((state: RootState) => state.user);
@@ -38,9 +40,15 @@ export const Home = () => {
             </div>
 
             <div className={styles.content}>
-            <div className={styles.item}>
-            <ProductCard></ProductCard>
-            </div>
+            {data?.map(item => (
+                <div className={styles.item}>
+                    <ProductCard 
+                    id={item.id} 
+                    name={item.name} 
+                    quantity={item.quantity}
+                    price={item.price}/>
+                </div>
+            ))}
             </div>
         </div>
     );

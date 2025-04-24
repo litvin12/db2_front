@@ -1,36 +1,21 @@
 import styles from './styles.module.scss'
-export const ProductCard = () => {
-    return (
+type ProductCardProps = {
+    id: number,
+    name: string,
+    quantity: number
+    price: number,
+}
+export const ProductCard = ({ id, name, quantity, price }: ProductCardProps) => {
+    return ( 
         <div className={styles.containerCard}>
             <div className={styles.item}>
-                <img className={styles.productImg} src="https://12bb6ecf-bda5-4c99-816b-12bda79f6bd9.selcdn.net/upload//Photo_Tovar/35328603_1712831109.jpg" alt="Картинка товара" />
+                <img className={styles.productImg} src="" alt="Картинка товара" />
                 <div className={styles.descr}>
                     
-                    <p><span>От 616₽</span></p>
-                    <h3 className={styles.title}>Канефрон Н таб 60 шт
+                    <p className={styles.price}><span>{price}₽</span></p>
+                    <h3 className={styles.title}>{name}
                     </h3>
-                    <p>В наличии</p>
-                    <button>Купить</button>
-                </div>
-        </div>
-        <div className={styles.item}>
-                <img className={styles.productImg} src="https://12bb6ecf-bda5-4c99-816b-12bda79f6bd9.selcdn.net/upload//Photo_Tovar/35328603_1712831109.jpg" alt="Картинка товара" />
-                <div className={styles.descr}>
-                    
-                    <p><span>От 616</span></p>
-                    <h3 className={styles.title}>Канефрон Н таб 60 шт
-                    </h3>
-                    <p>В наличии</p>
-                    <button>Купить</button>
-                </div>
-        </div><div className={styles.item}>
-                <img className={styles.productImg} src="https://12bb6ecf-bda5-4c99-816b-12bda79f6bd9.selcdn.net/upload//Photo_Tovar/35328603_1712831109.jpg" alt="Картинка товара" />
-                <div className={styles.descr}>
-                    
-                    <p><span>От 616</span></p>
-                    <h3 className={styles.title}>Канефрон Н таб 60 шт
-                    </h3>
-                    <p>В наличии</p>
+                    <p className={styles.quantity}>В наличии <span>{quantity}</span></p>
                     <button>Купить</button>
                 </div>
         </div>
