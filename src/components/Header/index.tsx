@@ -1,21 +1,26 @@
 import { setShowModal } from '../../redux/userSlice';
-import { setShowModalProfile } from '../../redux/userSlice';
-import { Profile } from '../pages/Profile'
 import { RootState } from '../../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { UserOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import { Link, useNavigate } from 'react-router-dom';
+import { UserOutlined, SettingOutlined } from '@ant-design/icons';
 
 import styles from './styles.module.scss';
+import { div } from 'framer-motion/client';
 
 export const Header = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const { showModal } = useSelector((state: RootState) => state.user);
     const onClickProfile = () => {
         dispatch(setShowModal(true));
     }
-    const onClickProfile2 = () => {
-        dispatch(setShowModalProfile(true));
+    const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')!) : null;
+    const handleUserClick = () => {
+        if (localStorage.getItem('user') === null) {
+            dispatch(setShowModal(true));
+        } else {
+            navigate('/profile');
+        }
     }
     return (
         <div className={styles.container}>
@@ -23,10 +28,17 @@ export const Header = () => {
                 <h1 className={styles.logo}>Аптека</h1>
             </Link>
             <div className={styles.dataBlock}>
-                
-                    <UserOutlined
-                    onClick={localStorage.getItem('user') === null ? onClickProfile : onClickProfile2}/>
-                <ShoppingCartOutlined/>
+
+                <UserOutlined
+                    onClick={handleUserClick} />
+
+                {user?.role === 'admin' &&
+                    <Link to='/admin-panel'>
+                        <SettingOutlined className={styles.adminPanel} style={{ fontSize: 24, marginLeft: 9 }} />
+                    </Link>
+                }
+
+
             </div>
         </div>
     );

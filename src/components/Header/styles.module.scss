@@ -1,4 +1,3 @@
-
 .container {
     display: flex;
     max-height: 67px;
@@ -6,14 +5,27 @@
     justify-content: space-between;
     align-items: center;
     padding: 15px;
-    background-color: rgb(200, 231, 192);
+    background-color: rgb(219, 237, 237);
 }
 
 h1 {
+    font-size: 37px;
     margin: 0;
 }
 
 
 .dataBlock {
     display: flex;
+    font-size: 21px;
+}
+
+.adminPanel {
+    color: black;
+
+    &:hover,
+    &:active,
+    &:focus,
+    &:visited {
+        color: black;
+    }
 }

@@ -7,8 +7,8 @@ export const AuthorizationSucces = ({ onClickClose }: AuthorizationSuccesProps) 
         <div className={styles.overlay}>
             <div className={styles.modal}>
                 <div className={styles.content}>
-                <h1>Вы успешно авторизованы!</h1>
-                <button onClick={onClickClose}>OK</button>
+                    <h1>Вы успешно авторизованы!</h1>
+                    <button onClick={onClickClose}>OK</button>
                 </div>
             </div>
         </div>

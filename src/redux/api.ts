@@ -37,6 +37,20 @@ export type medicines = {
     createdAt: string;
     updatedAt: string;
 }
+export type order = {
+    customerId: number;
+    medicineId: number;
+}
+export type getOrder = {
+    id: number;
+    customerId: number;
+    medicindeId: number;
+    type: string;
+    status: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
 export const api = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({
@@ -44,21 +58,21 @@ export const api = createApi({
     }),
     tagTypes: ['Product'],
     endpoints: (builder) => ({
-        getWholeSaleOrders: builder.query<wholeSaleOrders[], void> ({
+        getWholeSaleOrders: builder.query<wholeSaleOrders[], void>({
             query: () => ({
                 url: '/wholesale-orders',
                 method: 'GET',
             }),
             providesTags: ['Product']
         }),
-        getMedic: builder.query<wholeSaleOrders[], void> ({
+        getMedic: builder.query<wholeSaleOrders[], void>({
             query: () => ({
                 url: '/medicines',
                 method: 'GET',
             }),
             providesTags: ['Product']
         }),
-        addWholeSaleOrder: builder.mutation<wholeSaleOrders, wholeSaleOrdersP> ({
+        addWholeSaleOrder: builder.mutation<wholeSaleOrders, wholeSaleOrdersP>({
             query: (body) => ({
                 url: '/wholesale-orders',
                 method: 'POST',
@@ -69,21 +83,49 @@ export const api = createApi({
             }),
             invalidatesTags: ['Product']
         }),
-        getUser: builder.query<user[], void> ({
+        getUser: builder.query<user[], void>({
             query: () => ({
                 url: '/users',
                 method: 'GET',
             }),
             providesTags: ['Product']
         }),
-        getMedicines: builder.query<medicines[], void> ({
+        getMedicines: builder.query<medicines[], void>({
             query: () => ({
                 url: '/medicines',
                 method: 'GET',
             }),
             providesTags: ['Product']
         }),
-
+        addOrder: builder.mutation<void, order>({
+            query: ({ customerId, medicineId }) => ({
+                url: '/orders',
+                method: 'POST',
+                body: { customerId, medicineId },
+            }),
+            invalidatesTags: ['Product']
+        }),
+        getOrder: builder.query<getOrder[], void>({
+            query: () => ({
+                url: '/orders',
+                method: 'GET'
+            }),
+            providesTags: ['Product']
+        }),
+        editOrderStatus: builder.mutation<{ status: string, type: string }, { id: number }>({
+            query: (id) => ({
+                url: `/orders/${id}`,
+                method: 'PATCH'
+            }),
+            invalidatesTags: ['Product']
+        }),
+        deleteOrder: builder.mutation<void, { id: number }>({
+            query: (id) => ({
+                url: `/orders/${id}`,
+                method: 'DELETE'
+            }),
+            invalidatesTags: ['Product']
+        })
     })
 })
 export const {
@@ -92,4 +134,8 @@ export const {
     useGetMedicQuery,
     useGetUserQuery,
     useGetMedicinesQuery,
+    useAddOrderMutation,
+    useGetOrderQuery,
+    useEditOrderStatusMutation,
+    useDeleteOrderMutation,
 } = api;

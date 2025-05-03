@@ -52,7 +52,7 @@ export const SelectRole = ({ onClickClose }: propsModal) => {
                             {role}  
                         </li>
                     ))
-                }
+                    }
                 </div>
                 {showSucces && <AuthorizationSucces
                 onClickClose={(onClickClose)}
