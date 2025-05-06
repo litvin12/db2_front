@@ -40,6 +40,7 @@ export const Home = () => {
             <div className={styles.content}>
                 {data?.map(item => (
                     <ProductCard
+                        key={item.id}
                         id={item.id}
                         name={item.name}
                         type={item.type}

@@ -1,0 +1,44 @@
+.orders {
+    display: flex;
+    width: 100%;
+    padding: 10px;
+
+    span {
+        font-size: 15px;
+    }
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 400px;
+    overflow-y: auto;
+    width: 100%;
+    align-items: center;
+    padding: 10px;
+}
+
+.component {
+    display: flex;
+    width: 750px;
+    height: 150px;
+    gap: 10px;
+    background-color: darken(rgb(219, 237, 237), 5);
+    border: 1px solid;
+    border-radius: 9px;
+    align-items: center;
+    padding: 10px;
+}
+
+.name {
+    width: 200px;
+}
+
+.type {
+    width: 150px;
+}
+
+.status {
+    width: 170px;
+}

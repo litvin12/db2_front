@@ -1,9 +1,9 @@
-
 .containerProfile {
     display: flex;
     align-items: center;
     height: 100%;
 }
+
 .containerModal {
     display: flex;
     width: 100%;
@@ -13,12 +13,13 @@
     justify-content: center;
     align-items: center;
 }
+
 .modal {
     display: flex;
     flex-direction: column;
     background-color: white;
     padding: 15px;
-    border-radius: 9px;    
+    border-radius: 9px;
 }
 
 .more {
@@ -31,6 +32,7 @@
     margin-left: 15px;
     flex-direction: column;
 }
+
 .karousel {
     width: 100%;
     height: 25px;
@@ -42,13 +44,16 @@
     font-size: 19px;
     padding: 15px;
     flex-direction: row;
+
     &.selected {
         border-bottom: 2px solid;
     }
 }
+
 .karouselBlock {
     display: flex;
 }
+
 // .selected {
 //     display: flex;
 //     align-items: center;
@@ -63,32 +68,36 @@
     font-size: 29px;
 }
 
-button {
-    background-color: transparent;
-    border: 0;
-    &:hover {
-        cursor: pointer;
-    }
-    margin-left: auto;
-    margin-bottom: 0;
-}
+// button {
+//     background-color: transparent;
+//     border: 0;
+//     height: 30px;
+
+//     &:hover {
+//         cursor: pointer;
+//     }
+
+//     margin-left: auto;
+//     margin-bottom: 0;
+// }
 
 .containerUserDara {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;    
+    align-items: flex-start;
     margin-top: 15px;
 }
 
 .userData {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;    
+    align-items: flex-start;
     margin-top: 15px;
+
     span {
         font-size: 25px
     }
-    
+
 }
 
 .exit {
@@ -103,6 +112,9 @@ button {
     font-size: 25px;
     opacity: 0.7;
     transition: 0.1s ease-in-out;
+    height: 39px;
+    align-items: center;
+
     &:hover {
         cursor: pointer;
         opacity: 1;

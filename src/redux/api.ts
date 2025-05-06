@@ -44,13 +44,19 @@ export type order = {
 export type getOrder = {
     id: number;
     customerId: number;
-    medicindeId: number;
+    medicineId: number;
     type: string;
     status: string;
     createdAt: string;
     updatedAt: string;
 }
-
+export type recipe = {
+    id: number;
+    technology: string;
+    preparationTime: string;
+    createdAt: string;
+    updatedAt: string;
+}
 export const api = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({
@@ -112,10 +118,11 @@ export const api = createApi({
             }),
             providesTags: ['Product']
         }),
-        editOrderStatus: builder.mutation<{ status: string, type: string }, { id: number }>({
-            query: (id) => ({
+        editOrderStatus: builder.mutation<void, { id: number, status: string, type: string }>({
+            query: ({ id, status, type }) => ({
                 url: `/orders/${id}`,
-                method: 'PATCH'
+                method: 'PATCH',
+                body: { status, type }
             }),
             invalidatesTags: ['Product']
         }),
@@ -125,6 +132,13 @@ export const api = createApi({
                 method: 'DELETE'
             }),
             invalidatesTags: ['Product']
+        }),
+        getRecipe: builder.query<recipe[], void>({
+            query: () => ({
+                url: '/recipes',
+                method: 'GET'
+            }),
+            providesTags: ['Product']
         })
     })
 })
@@ -138,4 +152,5 @@ export const {
     useGetOrderQuery,
     useEditOrderStatusMutation,
     useDeleteOrderMutation,
+    useGetRecipeQuery,
 } = api;

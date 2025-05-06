@@ -32,13 +32,11 @@ export const Header = () => {
                 <UserOutlined
                     onClick={handleUserClick} />
 
-                {user?.role === 'admin' &&
+                {(user?.role === 'admin' || user?.role === 'pharmacist') &&
                     <Link to='/admin-panel'>
                         <SettingOutlined className={styles.adminPanel} style={{ fontSize: 24, marginLeft: 9 }} />
                     </Link>
                 }
-
-
             </div>
         </div>
     );

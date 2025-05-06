@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './styles.module.scss';
 import { user } from '../../../redux/api';
 import { useNavigate } from 'react-router-dom';
-import { div, h1 } from 'framer-motion/client';
 
 const menuItems = [
     'Мой профиль',
@@ -50,8 +49,7 @@ export const Profile = () => {
                             <h1>Мои заказы</h1>
                         </div>
                     }
-                    {CurrentUserData.role === 'admin' &&
-                        <div>111</div>}
+
                 </div>
                 <button className={styles.exit} onClick={onClickExit}>Выйти</button>
             </div>

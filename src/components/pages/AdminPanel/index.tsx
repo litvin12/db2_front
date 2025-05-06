@@ -3,6 +3,9 @@ import React from 'react';
 import styles from './styles.module.scss';
 import { useGetOrderQuery } from '../../../redux/api';
 import { OrdersAdm } from '../../AdminPanelComponents/Orders';
+import { useGetMedicinesQuery } from '../../../redux/api';
+import { Recipe } from '../../AdminPanelComponents/Recipe';
+import { Product } from '../../AdminPanelComponents/Product';
 const menuItems = [
     'Заказы',
     'Рецепты',
@@ -11,6 +14,8 @@ const menuItems = [
 ]
 export const AdminPanel = () => {
     const [selectedMenuItem, setSelectedMenuItem] = React.useState(menuItems[0]);
+    const { data } = useGetOrderQuery();
+    const { data: medicines } = useGetMedicinesQuery();
     return (
         <div className={styles.containerAdmin}>
             <div className={styles.content}>
@@ -24,14 +29,15 @@ export const AdminPanel = () => {
                         </div>
                     ))}
                 </div>
+                <div className={styles.content2}></div>
                 {selectedMenuItem === 'Заказы' ?
-                    <OrdersAdm />
+                    <OrdersAdm data={data ?? []} medicines={medicines ?? []} />
                     :
                     selectedMenuItem === 'Рецепты' ?
-                        <div>222</div>
+                        <Recipe />
                         :
                         selectedMenuItem === 'Все товары' ?
-                            <div>333</div>
+                            <Product />
                             :
                             selectedMenuItem === 'Заказы на оптовый склад' ?
                                 <div>444</div>
