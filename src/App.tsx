@@ -10,21 +10,20 @@ import { AdminPanel } from './components/pages/AdminPanel'
 function App() {
 
   return (
-    <motion.div
-      initial={{ scale: 0 }}
-      animate={{ scale: 1 }}
-      transition={{ type: "spring", stiffness: 260, damping: 20 }}
-    >
-      <div className='container'>
-        <Routes>
-          <Route path='/' element={<MainLayout />}>
-            <Route path='/' element={<Home />} />
-            <Route path='/profile' element={<Profile />} />
-            <Route path='/admin-panel' element={<AdminPanel />} />
-          </Route>
-        </Routes>
-      </div>
-    </motion.div>
+    // <motion.div
+    //   initial={{ scale: 0 }}
+    //   animate={{ scale: 1 }}
+    //   transition={{ type: "spring", stiffness: 260, damping: 20 }}
+    // >
+    <div className='containerApp'>
+      <Routes>
+        <Route path='/' element={<MainLayout />}>
+          <Route path='/' element={<Home />} />
+          <Route path='/profile' element={<Profile />} />
+          <Route path='/admin-panel' element={<AdminPanel />} />
+        </Route>
+      </Routes>
+    </div>
   )
 }
 

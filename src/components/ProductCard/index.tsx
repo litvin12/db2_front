@@ -32,14 +32,14 @@ export const ProductCard = ({ id, name, type, quantity, price }: ProductCardProp
     }
     return (
         <div className={styles.item}>
-            <img className={styles.productImg} src="" alt="Картинка товара" />
+            <img className={styles.productImg} src="https://verybet.ru/wp-content/uploads/2024/05/pudge.png" alt="Картинка товара" />
             <div className={styles.descr}>
 
                 <p className={styles.price}><span>{price}₽</span></p>
                 <h3 className={styles.title}>{name}
                 </h3>
                 <span className={styles.type}>{type === 'manufacturable' ? 'Приготавливаемое' : 'Готовое'}</span>
-                <p className={styles.quantity}>В наличии <span>{quantity}</span></p>
+                <p className={styles.quantity}>{quantity > 0 ? `В наличии ${quantity}` : 'Под заказ'}</p>
                 <button onClick={onClickOrder}>Купить</button>
             </div>
         </div>

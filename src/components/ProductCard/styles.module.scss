@@ -8,12 +8,13 @@
     padding: 5px;
     background-color: white;
     margin-top: 15px;
-
 }
 
 .productImg {
-    height: 150px;
-    width: 150px;
+    display: flex;
+    justify-content: center;
+    height: 100px;
+    margin-top: 3px;
 }
 
 .descr {
@@ -33,6 +34,7 @@
 
     .quantity {
         margin-top: 25px;
+        margin-bottom: 5px;
     }
 
     span {
@@ -40,7 +42,7 @@
     }
 
     button {
-        margin-top: 5px;
+        // margin-top: 5px;
         margin-right: 7px;
         justify-self: flex-end;
         border-radius: 7px;

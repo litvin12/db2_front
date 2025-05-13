@@ -1,8 +1,5 @@
-.container {
+.containerApp {
   display: flex;
-  height: 100vh;
-  flex-direction: column;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
+  border-radius: 15px;
+  height: 100%;
 }

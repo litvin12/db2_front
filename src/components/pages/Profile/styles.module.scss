@@ -1,17 +1,22 @@
 .containerProfile {
     display: flex;
     align-items: center;
-    height: 100%;
+    height: 650px;
+    width: 100%;
+    background-color: white;
 }
 
 .containerModal {
     display: flex;
-    width: 100%;
-    height: 70%;
     background-color: rgb(219, 237, 237);
     padding: 35px;
     justify-content: center;
+    width: 100%;
+    height: 350px;
+    // margin: 15px;
     align-items: center;
+    margin-left: 15px;
+    margin-right: 15px;
 }
 
 .modal {
@@ -68,18 +73,6 @@
     font-size: 29px;
 }
 
-// button {
-//     background-color: transparent;
-//     border: 0;
-//     height: 30px;
-
-//     &:hover {
-//         cursor: pointer;
-//     }
-
-//     margin-left: auto;
-//     margin-bottom: 0;
-// }
 
 .containerUserDara {
     display: flex;

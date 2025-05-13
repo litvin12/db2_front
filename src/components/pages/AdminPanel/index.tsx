@@ -8,7 +8,6 @@ import { Recipe } from '../../AdminPanelComponents/Recipe';
 import { Product } from '../../AdminPanelComponents/Product';
 const menuItems = [
     'Заказы',
-    'Рецепты',
     'Все товары',
     'Заказы на оптовый склад'
 ]
@@ -29,12 +28,9 @@ export const AdminPanel = () => {
                         </div>
                     ))}
                 </div>
-                <div className={styles.content2}></div>
-                {selectedMenuItem === 'Заказы' ?
-                    <OrdersAdm data={data ?? []} medicines={medicines ?? []} />
-                    :
-                    selectedMenuItem === 'Рецепты' ?
-                        <Recipe />
+                <div className={styles.content2}>
+                    {selectedMenuItem === 'Заказы' ?
+                        <OrdersAdm data={data ?? []} medicines={medicines ?? []} />
                         :
                         selectedMenuItem === 'Все товары' ?
                             <Product />
@@ -43,8 +39,9 @@ export const AdminPanel = () => {
                                 <div>444</div>
                                 :
                                 <div>Такого пункта нет</div>
-                }
+                    }
 
+                </div>
             </div>
         </div>
     );

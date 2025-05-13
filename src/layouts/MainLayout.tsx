@@ -6,11 +6,11 @@ import { Footer } from "../components/Footer";
 export const MainLayout = () => {
     return (
         <div className={styles.wrapper}>
-            <Header/>
+            <Header />
             <div className={styles.content}>
-            <Outlet/>
+                <Outlet />
             </div>
-            <Footer/>
+            <Footer />
         </div>
     );
 }

@@ -8,15 +8,12 @@
     }
 }
 
-.content {
+.containerItem {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    max-height: 400px;
-    overflow-y: auto;
-    width: 100%;
+    gap: 15px;
+    // justify-content: center;
     align-items: center;
-    padding: 10px;
 }
 
 .component {
@@ -29,6 +26,20 @@
     border-radius: 9px;
     align-items: center;
     padding: 10px;
+    // justify-self: center;
+}
+
+.component2 {
+    display: flex;
+    width: 550px;
+    height: 150px;
+    gap: 10px;
+    background-color: darken(rgb(219, 237, 237), 5);
+    border: 1px solid;
+    border-radius: 9px;
+    align-items: center;
+    padding: 10px;
+    // justify-self: center;
 }
 
 .name {
@@ -41,4 +52,31 @@
 
 .status {
     width: 170px;
+}
+
+.filters {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    justify-content: center;
+}
+
+.technology {
+    display: flex;
+    flex-direction: column;
+}
+
+.recipe {
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    gap: 10px;
+    // margin-top: 25px;
+}
+
+.recipeModal {
+    display: flex;
+    flex-direction: column;
 }

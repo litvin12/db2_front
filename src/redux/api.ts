@@ -57,6 +57,15 @@ export type recipe = {
     createdAt: string;
     updatedAt: string;
 }
+
+export type recipeComponent = {
+    id: number;
+    componentId: number;
+    recipeId: number;
+    quantityNeeded: number;
+    createdAt: string;
+    updatedAt: string;
+}
 export const api = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({
@@ -139,6 +148,13 @@ export const api = createApi({
                 method: 'GET'
             }),
             providesTags: ['Product']
+        }),
+        getRecipeComponents: builder.query<recipeComponent[], void>({
+            query: () => ({
+                url: '/recipe-components',
+                method: 'GET'
+            }),
+            providesTags: ['Product']
         })
     })
 })
@@ -153,4 +169,5 @@ export const {
     useEditOrderStatusMutation,
     useDeleteOrderMutation,
     useGetRecipeQuery,
+    useGetRecipeComponentsQuery,
 } = api;

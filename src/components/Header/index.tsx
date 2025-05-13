@@ -24,7 +24,7 @@ export const Header = () => {
     }
     return (
         <div className={styles.container}>
-            <Link to='/'>
+            <Link className={styles.link} to='/'>
                 <h1 className={styles.logo}>Аптека</h1>
             </Link>
             <div className={styles.dataBlock}>

@@ -1,18 +1,28 @@
 .container {
     display: flex;
     max-height: 67px;
-    width: 100%;
+    // width: 100%;
     justify-content: space-between;
     align-items: center;
     padding: 15px;
-    background-color: rgb(219, 237, 237);
+    // background-color: rgb(219, 237, 237);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom: 1px solid;
 }
 
-h1 {
+
+.logo {
     font-size: 37px;
     margin: 0;
+    color: rgb(118, 118, 118);
 }
 
+.link {
+    outline: none;
+    box-shadow: none;
+    text-decoration: none;
+}
 
 .dataBlock {
     display: flex;

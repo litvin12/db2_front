@@ -1,7 +1,7 @@
 .containerAdmin {
     display: flex;
     width: 100%;
-    height: 100%;
+    height: 650px;
     align-items: center;
     padding: 5px;
 }
@@ -9,10 +9,11 @@
 .content {
     display: flex;
     width: 100%;
-    height: 70%;
     background-color: rgb(219, 237, 237);
     flex-direction: column;
-
+    height: 450px;
+    border-radius: 9px;
+    padding: 11px;
     // padding: 10px;
     // border-radius: 9px;
 }
@@ -20,7 +21,7 @@
 .menu {
     display: flex;
     width: 100%;
-    height: 39px;
+    height: 55px;
     // padding: 3px;
     // background-color: darken(rgb(219, 237, 237), 3);
 }
@@ -31,6 +32,9 @@
     padding: 10px;
     justify-content: center;
     overflow: auto;
+    height: 100%;
+    margin-top: 9px;
+
 }
 
 .carousel {
