@@ -5,6 +5,7 @@ import { ModalComponents } from '../ModalComponents';
 export const Recipe = () => {
     const [showModalComponents, setShowModalComponents] = React.useState(false);
     const { data } = useGetRecipeQuery();
+    console.log(data);
     const [recipeId, setRecipeId] = React.useState<number | null>(null);
     const handleClick = (id: number) => {
         setRecipeId(id);

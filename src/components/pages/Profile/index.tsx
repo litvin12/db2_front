@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './styles.module.scss';
 import { user } from '../../../redux/api';
 import { useNavigate } from 'react-router-dom';
-
+import { OrdersUser } from '../../OrdersUser';
 const menuItems = [
     'Мой профиль',
     'Мои заказы'
@@ -45,8 +45,8 @@ export const Profile = () => {
                             </div>
                         </div>
                         :
-                        <div>
-                            <h1>Мои заказы</h1>
+                        <div className={styles.ordersUser}>
+                            <OrdersUser />
                         </div>
                     }
 

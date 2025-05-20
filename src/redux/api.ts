@@ -52,6 +52,7 @@ export type getOrder = {
 }
 export type recipe = {
     id: number;
+    title: string;
     technology: string;
     preparationTime: string;
     createdAt: string;
@@ -66,6 +67,28 @@ export type recipeComponent = {
     createdAt: string;
     updatedAt: string;
 }
+
+export type whosaleBatch = {
+    id: number;
+    status: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+
+export type wholesaleBatchID = {
+    batchId: number;
+    wholesaleOrderId: number;
+    medicineId: number;
+    quantity: number;
+    wholesaleOrderStatus: string;
+    wholesaleOrderCreatedAt: string;
+    wholesaleOrderUpdatedAt: string;
+    medicineName: string;
+    medicineType: string;
+    medicinePrice: number;
+}
+
 export const api = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({
@@ -155,6 +178,46 @@ export const api = createApi({
                 method: 'GET'
             }),
             providesTags: ['Product']
+        }),
+        getWhosaleBatch: builder.query<whosaleBatch[], void>({
+            query: () => ({
+                url: '/wholesale-batches',
+                method: 'GET'
+            }),
+            providesTags: ['Product']
+        }),
+        addWholesaleBatch: builder.mutation<void, void>({
+            query: () => ({
+                url: '/wholesale-batches',
+                method: 'POST',
+            }),
+            invalidatesTags: ['Product']
+        }),
+        getWholesaleBatchID: builder.query<wholesaleBatchID[], { id: number }>({
+            query: (id) => ({
+                url: `/wholesale-batches/${id}/orders`,
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+
+            }),
+            providesTags: ['Product']
+        }),
+        editStatusBatch: builder.mutation<void, { id: number, status: string }>({
+            query: ({ id, status }) => ({
+                url: `/wholesale-batches/${id}`,
+                method: 'PATCH',
+                body: { status }
+            }),
+            invalidatesTags: ['Product']
+        }),
+        getOrdersUser: builder.query<getOrder[], { id: number }>({
+            query: (id) => ({
+                url: `/orders/user/${id}`,
+                method: 'GET'
+            }),
+            providesTags: ['Product']
         })
     })
 })
@@ -170,4 +233,9 @@ export const {
     useDeleteOrderMutation,
     useGetRecipeQuery,
     useGetRecipeComponentsQuery,
+    useGetWhosaleBatchQuery,
+    useAddWholesaleBatchMutation,
+    useGetWholesaleBatchIDQuery,
+    useEditStatusBatchMutation,
+    useGetOrdersUserQuery,
 } = api;

@@ -1,0 +1,103 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    // height: 100%;
+    // width: 100%;
+    // overflow-y: auto;
+    // align-items: center;
+}
+
+.component {
+    display: flex;
+    border: 1px solid #e0e0e0;
+    border-radius: 9px;
+    width: 555px;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: darken(rgb(219, 237, 237), 5);
+
+
+    &:hover {
+        background-color: darken(rgb(219, 237, 237), 9);
+
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+}
+
+.name {
+    flex: 1;
+    margin: 0 15px;
+}
+
+// .price {
+//     width: 120px;
+//     margin-left: 15px;
+//     text-align: right;
+// }
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modalContent {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    min-width: 300px;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.price {
+    width: 115px;
+    padding: 8px 16px;
+    font-size: 12px;
+    border: 2px solid #222;
+    border-radius: 10px;
+    background: #fff;
+    color: #222;
+    appearance: none;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    font-family: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+    &:focus {
+        border-color: #4bb6f7;
+        box-shadow: 0 0 0 2px #b3e5fc;
+    }
+
+    &:disabled {
+        background: #f5f5f5;
+        color: #aaa;
+        border-color: #ccc;
+        cursor: not-allowed;
+    }
+}
+
+// Для стрелочки (кастомизация appearance)
+.price {
+    background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='16' viewBox='0 0 24 24' width='16' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 20px 20px;
+    padding-right: 36px;
+}

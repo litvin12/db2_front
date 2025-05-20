@@ -6,12 +6,20 @@ import { OrdersAdm } from '../../AdminPanelComponents/Orders';
 import { useGetMedicinesQuery } from '../../../redux/api';
 import { Recipe } from '../../AdminPanelComponents/Recipe';
 import { Product } from '../../AdminPanelComponents/Product';
+import { OrdersOpt } from '../../AdminPanelComponents/OrdersOpt';
+import { CurrentOrder } from '../../AdminPanelComponents/CurrentOrder';
 const menuItems = [
     'Заказы',
     'Все товары',
-    'Заказы на оптовый склад'
+    'Рецепты',
+    'Заказы на оптовый склад',
+    'Текущий заказ'
 ]
+//  'Заказы на оптовый склад(GET Batch, post batch)',
+//     'Текущий заказ(GET WO, Sts pending) '
+//При нажатии на батч открывается модалка с хуйордерс
 export const AdminPanel = () => {
+    const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')!) : null;
     const [selectedMenuItem, setSelectedMenuItem] = React.useState(menuItems[0]);
     const { data } = useGetOrderQuery();
     const { data: medicines } = useGetMedicinesQuery();
@@ -36,9 +44,15 @@ export const AdminPanel = () => {
                             <Product />
                             :
                             selectedMenuItem === 'Заказы на оптовый склад' ?
-                                <div>444</div>
+                                (user.role === 'admin' ? <OrdersOpt /> : <div>У вас нет доступа к этой странице</div>)
                                 :
-                                <div>Такого пункта нет</div>
+                                selectedMenuItem === 'Рецепты' ?
+                                    <Recipe />
+                                    :
+                                    selectedMenuItem === 'Текущий заказ' ?
+                                        <CurrentOrder />
+                                        :
+                                        <div>Такого пункта нет</div>
                     }
 
                 </div>

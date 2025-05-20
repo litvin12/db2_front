@@ -5,29 +5,33 @@
     // height: 100%;
     // width: 100%;
     // overflow-y: auto;
-    // align-items: center;
+    align-items: center;
 }
 
 .component {
     display: flex;
     border: 1px solid;
     border-radius: 9px;
-    width: 555px;
+    width: 515px;
     padding: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+    justify-content: space-between;
     background-color: darken(rgb(219, 237, 237), 5);
 
 }
 
 .name {
-    width: 190px;
+    width: 95px;
+    text-align: left;
 }
 
 .quantity {
-    width: 70px;
-    margin-left: 15px;
+    width: 75px;
+    // margin-left: 15px;
 }
 
 .price {
     width: 70px;
-    margin-left: 15px;
+    // margin-left: 15px;
 }
