@@ -37,6 +37,14 @@ export type medicines = {
     createdAt: string;
     updatedAt: string;
 }
+export type medicine = {
+    name: string;
+    type: string;
+    recipeId: number;
+    criticalNorm: number;
+    quantity: number;
+    price: number;
+}
 export type order = {
     customerId: number;
     medicineId: number;
@@ -218,6 +226,43 @@ export const api = createApi({
                 method: 'GET'
             }),
             providesTags: ['Product']
+        }),
+        addMedicine: builder.mutation<void, medicine>({
+            query: (body) => ({
+                url: '/medicines',
+                method: 'POST',
+                body,
+            }),
+            invalidatesTags: ['Product']
+        }),
+        deleteMedicine: builder.mutation<void, { id: number }>({
+            query: (id) => ({
+                url: `/medicines/${id}`,
+                method: 'DELETE'
+            }),
+            invalidatesTags: ['Product']
+        }),
+        editMedicine: builder.mutation<void, { medicine: medicine, id: number }>({
+            query: ({ medicine, id }) => ({
+                url: `/medicines/${id}`,
+                method: 'PATCH',
+                body: medicine,
+            }),
+            invalidatesTags: ['Product']
+        }),
+        deleteWholesaleOrder: builder.mutation<void, { id: number }>({
+            query: (id) => ({
+                url: `/wholesale-orders/${id}`,
+                method: 'DELETE'
+            }),
+            invalidatesTags: ['Product']
+        }),
+        deleteWholesaleBatch: builder.mutation<void, { id: number }>({
+            query: (id) => ({
+                url: `/wholesale-batches/${id}`,
+                method: 'DELETE'
+            }),
+            invalidatesTags: ['Product']
         })
     })
 })
@@ -238,4 +283,9 @@ export const {
     useGetWholesaleBatchIDQuery,
     useEditStatusBatchMutation,
     useGetOrdersUserQuery,
+    useAddMedicineMutation,
+    useDeleteMedicineMutation,
+    useEditMedicineMutation,
+    useDeleteWholesaleOrderMutation,
+    useDeleteWholesaleBatchMutation,
 } = api;

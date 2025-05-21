@@ -1,8 +1,19 @@
 import styles from './styles.module.scss'
-export const Search = () => {
+
+interface SearchProps {
+    value: string;
+    onChange: (value: string) => void;
+}
+
+export const Search = ({ value, onChange }: SearchProps) => {
     return (
         <div className={styles.containerSearch}>
-            <input type="text" placeholder="Поиск"/>
+            <input
+                type="text"
+                placeholder="Поиск"
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+            />
         </div>
     );
 }

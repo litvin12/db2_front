@@ -13,7 +13,7 @@ const menuItems = [
     'Все товары',
     'Рецепты',
     'Заказы на оптовый склад',
-    'Текущий заказ'
+    'Текущий заказ на склад'
 ]
 //  'Заказы на оптовый склад(GET Batch, post batch)',
 //     'Текущий заказ(GET WO, Sts pending) '
@@ -44,12 +44,12 @@ export const AdminPanel = () => {
                             <Product />
                             :
                             selectedMenuItem === 'Заказы на оптовый склад' ?
-                                (user.role === 'admin' ? <OrdersOpt /> : <div>У вас нет доступа к этой странице</div>)
+                                <OrdersOpt />
                                 :
                                 selectedMenuItem === 'Рецепты' ?
                                     <Recipe />
                                     :
-                                    selectedMenuItem === 'Текущий заказ' ?
+                                    selectedMenuItem === 'Текущий заказ на склад' ?
                                         <CurrentOrder />
                                         :
                                         <div>Такого пункта нет</div>

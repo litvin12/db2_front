@@ -1,20 +1,23 @@
 import { useState } from 'react';
 import styles from './styles.module.scss';
-import { useGetWhosaleBatchQuery, useEditStatusBatchMutation } from '../../../redux/api';
-
+import { useGetWhosaleBatchQuery, useEditStatusBatchMutation, useDeleteWholesaleOrderMutation, useDeleteWholesaleBatchMutation } from '../../../redux/api';
 import { ModalBatch } from '../ModalBatch';
+import { DeleteOutlined } from '@ant-design/icons';
+import { Popconfirm, Button, message } from 'antd';
 
 export const OrdersOpt = () => {
     const [id, setId] = useState<number>(2);
     const { data } = useGetWhosaleBatchQuery();
     const [editStatusBatch] = useEditStatusBatchMutation();
+    const [deleteWholesaleOrder] = useDeleteWholesaleOrderMutation();
+    const [deleteWholesaleBatch] = useDeleteWholesaleBatchMutation();
     // Корректная проверка роли пользователя
     let isAdmin = false;
     const userStr = localStorage.getItem('user');
     if (userStr) {
         try {
             const user = JSON.parse(userStr);
-            isAdmin = user.role === 'admin';
+            isAdmin = user.role === 'admin' || user.role === 'pharmacist';
         } catch (e) {
             isAdmin = false;
         }
@@ -38,6 +41,24 @@ export const OrdersOpt = () => {
         }
     };
 
+    const handleDelete = async (id: number) => {
+        try {
+            await deleteWholesaleOrder(id).unwrap();
+            message.success('Оптовый заказ удалён');
+        } catch (error) {
+            message.error('Ошибка при удалении заказа');
+        }
+    };
+
+    const handleDeleteBatch = async (id: number) => {
+        try {
+            await deleteWholesaleBatch(id).unwrap();
+            message.success('Партия удалена');
+        } catch (error) {
+            message.error('Ошибка при удалении партии');
+        }
+    };
+
     return (
         <div className={styles.container}>
             {data?.map(item => (
@@ -47,6 +68,7 @@ export const OrdersOpt = () => {
                     onClick={() => handleOrderClick(item.id)}
                 >
                     <span>Номер батча: {item.id}</span>
+
                     <span className={styles.name}>
                         Дата: {new Date(item.createdAt).toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
                     </span>
@@ -60,6 +82,23 @@ export const OrdersOpt = () => {
                         <option value="placed">Размещен</option>
                         <option value="arrived">Доставлен</option>
                     </select>
+                    {isAdmin && (
+                        <Popconfirm
+                            title="Удалить партию?"
+                            onConfirm={e => { e && e.stopPropagation(); handleDeleteBatch(item.id); }}
+                            okText="Да"
+                            cancelText="Нет"
+                            onCancel={e => e && e.stopPropagation()}
+                        >
+                            <Button
+                                danger
+                                size="small"
+                                icon={<DeleteOutlined />}
+                                style={{ marginLeft: 8 }}
+                                onClick={e => e.stopPropagation()}
+                            />
+                        </Popconfirm>
+                    )}
                 </div>
             ))}
 

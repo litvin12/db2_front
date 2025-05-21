@@ -2,7 +2,7 @@ import styles from './styles.module.scss'
 import { getOrder, medicines, useGetRecipeQuery, useGetRecipeComponentsQuery } from '../../../redux/api';
 import { useEditOrderStatusMutation } from '../../../redux/api';
 import React, { useState, useMemo } from 'react';
-import { Select, Dropdown, Menu, Button } from 'antd';
+import { Select, Dropdown, Menu, Button, Input } from 'antd';
 const statuses = ['Ожидает получения', 'Готов к приготовлению'];
 const types = ['Готовый', 'Приготовляемое'];
 type props = {
@@ -57,6 +57,7 @@ export const OrdersAdm = ({ data, medicines }: props) => {
     const [showRecipe, setShowRecipe] = useState(false);
     const [selectedRecipeId, setSelectedRecipeId] = useState<number | null>(null);
     const [filter, setFilter] = useState('all');
+    const [searchQuery, setSearchQuery] = useState('');
 
     const menu = (
         <Menu
@@ -73,19 +74,39 @@ export const OrdersAdm = ({ data, medicines }: props) => {
     const filteredAndSortedOrders = useMemo(() => {
         if (!data) return [];
         let arr = [...data];
+        // Фильтрация по поисковому запросу
+        if (searchQuery.trim()) {
+            arr = arr.filter(order => {
+                const medicine = medicines.find(med => med.id === order.medicineId);
+                const name = medicine?.name?.toLowerCase() || '';
+                const statusRaw = (order.status || '').toLowerCase();
+                const typeRaw = (order.type || '').toLowerCase();
+                // Русские отображаемые значения:
+                const statusDisplay =
+                    order.status === 'waiting_for_receive' ? 'ожидает получения' :
+                        order.status === 'ready_to_preparation' ? 'готов к приготовлению' : '';
+                const typeDisplay =
+                    order.type === 'ready' ? 'готовый' :
+                        order.type === 'manufacturable' ? 'приготавливаемое' : '';
+                const query = searchQuery.toLowerCase();
+                return (
+                    name.includes(query) ||
+                    statusRaw.includes(query) ||
+                    typeRaw.includes(query) ||
+                    statusDisplay.includes(query) ||
+                    typeDisplay.includes(query)
+                );
+            });
+        }
         // Фильтрация по выбранному фильтру
         if (filter !== 'all') {
             if (filter === 'waiting_for_receive') {
-                // Приготовлен
                 arr = arr.filter(order => order.type === 'manufacturable' && order.status === 'ready_to_receive');
             } else if (filter === 'ready_to_preparation') {
-                // Ожидает приготовления
                 arr = arr.filter(order => order.status === 'ready_to_preparation' && order.type === 'manufacturable');
             } else if (filter === 'manufacturable') {
-                // Приготавливаемое
                 arr = arr.filter(order => order.type === 'manufacturable');
             } else if (filter === 'ready') {
-                // Готовое
                 arr = arr.filter(order => order.type === 'ready');
             } else {
                 arr = arr.filter(order => order.status === filter);
@@ -98,7 +119,6 @@ export const OrdersAdm = ({ data, medicines }: props) => {
             } else if (sortOrder === 'date_asc') {
                 return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
             } else {
-                // Для сортировки по сумме заказа
                 const medA = medicines.find(med => med.id === a.medicineId);
                 const medB = medicines.find(med => med.id === b.medicineId);
                 const sumA = (medA?.price || 0) * 1;
@@ -112,7 +132,7 @@ export const OrdersAdm = ({ data, medicines }: props) => {
             return 0;
         });
         return arr;
-    }, [data, medicines, sortOrder, filter]);
+    }, [data, medicines, sortOrder, filter, searchQuery]);
 
     const handleShowRecipe = (recipeId?: number) => {
         if (recipeId) {
@@ -124,6 +144,12 @@ export const OrdersAdm = ({ data, medicines }: props) => {
     return (
         <div>
             <div className={styles.filters}>
+                <Input
+                    placeholder="Поиск по названию, статусу или типу"
+                    value={searchQuery}
+                    onChange={e => setSearchQuery(e.target.value)}
+                    style={{ width: 260 }}
+                />
                 <Select
                     value={sortOrder}
                     onChange={setSortOrder}

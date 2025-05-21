@@ -22,7 +22,7 @@ export const ModalBatch: FC<ModalBatchProps> = ({ isOpen, onClose, batchID }) =>
                         <div className={styles.component}>
                             <span className={styles.name}>{item.medicineName}</span>
                             <span className={styles.quantity}>{item.quantity}</span>
-                            <span className={styles.price}>{item.wholesaleOrderStatus === 'pending' ? 'Ожидается' : item.wholesaleOrderStatus === 'placed' ? 'Размещен' : item.wholesaleOrderStatus === 'arrived' ? 'Доставлен' : 'Такого статуса нет'}</span>
+                            <span className={styles.price}>{item.wholesaleOrderStatus}</span>
                         </div>
                     ))}
                 </div>
