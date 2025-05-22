@@ -96,7 +96,18 @@ export type wholesaleBatchID = {
     medicineType: string;
     medicinePrice: number;
 }
-
+export type editRecipe = {
+    title: string;
+    technology: string;
+    preparationTime: string;
+}
+export type addRecipe = {
+    title: string;
+    technology: string;
+    preparationTime: string;
+    createdAt: string;
+    updatedAt: string;
+}
 export const api = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({
@@ -118,14 +129,11 @@ export const api = createApi({
             }),
             providesTags: ['Product']
         }),
-        addWholeSaleOrder: builder.mutation<wholeSaleOrders, wholeSaleOrdersP>({
+        addWholeSaleOrder: builder.mutation<void, wholeSaleOrdersP>({
             query: (body) => ({
                 url: '/wholesale-orders',
                 method: 'POST',
                 body,
-                headers: {
-                    'Content-Type': 'application/json'
-                }
             }),
             invalidatesTags: ['Product']
         }),
@@ -263,6 +271,22 @@ export const api = createApi({
                 method: 'DELETE'
             }),
             invalidatesTags: ['Product']
+        }),
+        editRecipe: builder.mutation<void, { editRecipe: editRecipe, id: number }>({
+            query: ({ editRecipe, id }) => ({
+                url: `/recipes/${id}`,
+                method: 'PATCH',
+                body: editRecipe,
+            }),
+            invalidatesTags: ['Product']
+        }),
+        addRecipe: builder.mutation<void, addRecipe>({
+            query: (body) => ({
+                url: '/recipes',
+                method: 'POST',
+                body,
+            }),
+            invalidatesTags: ['Product']
         })
     })
 })
@@ -288,4 +312,6 @@ export const {
     useEditMedicineMutation,
     useDeleteWholesaleOrderMutation,
     useDeleteWholesaleBatchMutation,
+    useEditRecipeMutation,
+    useAddRecipeMutation,
 } = api;

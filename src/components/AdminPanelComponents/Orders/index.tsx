@@ -1,8 +1,8 @@
 import styles from './styles.module.scss'
-import { getOrder, medicines, useGetRecipeQuery, useGetRecipeComponentsQuery } from '../../../redux/api';
+import { getOrder, medicines, useGetRecipeQuery, useGetRecipeComponentsQuery, useGetUserQuery } from '../../../redux/api';
 import { useEditOrderStatusMutation } from '../../../redux/api';
 import React, { useState, useMemo } from 'react';
-import { Select, Dropdown, Menu, Button, Input } from 'antd';
+import { Select, Dropdown, Menu, Button, Input, Modal } from 'antd';
 const statuses = ['Ожидает получения', 'Готов к приготовлению'];
 const types = ['Готовый', 'Приготовляемое'];
 type props = {
@@ -58,6 +58,9 @@ export const OrdersAdm = ({ data, medicines }: props) => {
     const [selectedRecipeId, setSelectedRecipeId] = useState<number | null>(null);
     const [filter, setFilter] = useState('all');
     const [searchQuery, setSearchQuery] = useState('');
+    const { data: users } = useGetUserQuery();
+    const [selectedOrder, setSelectedOrder] = useState<getOrder | null>(null);
+    const [showCustomerModal, setShowCustomerModal] = useState(false);
 
     const menu = (
         <Menu
@@ -169,6 +172,8 @@ export const OrdersAdm = ({ data, medicines }: props) => {
                         <div
                             key={order.id}
                             className={order.type === 'manufacturable' ? styles.component : styles.component2}
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => { setSelectedOrder(order); setShowCustomerModal(true); }}
                         >
                             <h4 className={styles.name}>
                                 {medicine?.name || `Not found (id: ${order.medicineId})`}
@@ -178,7 +183,7 @@ export const OrdersAdm = ({ data, medicines }: props) => {
                                 {order.status === 'waiting_for_receive' && statuses[0]}
                                 {order.status === 'ready_to_preparation' && statuses[1]}
                             </span>
-                            {order.status === 'ready_to_preparation' && <button className={styles.button} onClick={() => editOrderStatus({ id: order.id, status: 'waiting_for_receive', type: order.type })}>Приготовлено</button>}
+                            {order.status === 'ready_to_preparation' && <button className={styles.button} onClick={e => { e.stopPropagation(); editOrderStatus({ id: order.id, status: 'waiting_for_receive', type: order.type }) }}>Приготовлено</button>}
                             {/* Показываем сумму заказа */}
                             <div className={styles.sum}>
                                 Сумма заказа: {(medicine?.price || 0) * 1} ₽
@@ -189,7 +194,7 @@ export const OrdersAdm = ({ data, medicines }: props) => {
                             </div>
                             {/* Кнопка для показа рецепта */}
                             {medicine?.recipeId && (
-                                <button className={styles.button} onClick={() => handleShowRecipe(medicine.recipeId)}>
+                                <button className={styles.button} onClick={e => { e.stopPropagation(); handleShowRecipe(medicine.recipeId); }}>
                                     Рецепт
                                 </button>
                             )}
@@ -203,6 +208,30 @@ export const OrdersAdm = ({ data, medicines }: props) => {
                     onClose={() => setShowRecipe(false)}
                 />
             )}
+            <Modal
+                open={showCustomerModal}
+                onCancel={() => setShowCustomerModal(false)}
+                footer={null}
+                title="Информация о заказчике"
+            >
+                {selectedOrder && users ? (
+                    (() => {
+                        const customer = users.find(u => u.id === selectedOrder.customerId);
+                        return customer ? (
+                            <div>
+                                <div><b>Имя:</b> {customer.firstName} {customer.secondName}</div>
+                                <div><b>Телефон:</b> {customer.phoneNumber}</div>
+                                <div><b>Адрес:</b> {customer.address}</div>
+                                <div><b>Роль:</b> {customer.role === 'admin' ? 'Администратор' : customer.role === 'user' ? 'Пользователь' : customer.role === 'pharmacist' ? 'Фармацевт' : customer.role}</div>
+                            </div>
+                        ) : (
+                            <div>Информация о заказчике не найдена</div>
+                        );
+                    })()
+                ) : (
+                    <div>Загрузка...</div>
+                )}
+            </Modal>
         </div>
     );
 }

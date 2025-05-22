@@ -41,7 +41,7 @@ export const Profile = () => {
                             <div className={styles.userData}>
                                 <span>Имя: {userData?.firstName}</span>
                                 <span>Фамилия: {userData?.secondName}</span>
-                                <span>Роль: {userData?.role}</span>
+                                <span>Роль: {userData?.role === 'admin' ? 'Администратор' : userData?.role === 'user' ? 'Пользователь' : userData?.role === 'pharmacist' ? 'Фармацевт' : userData?.role}</span>
                             </div>
                         </div>
                         :

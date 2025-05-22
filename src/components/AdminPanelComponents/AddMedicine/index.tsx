@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAddMedicineMutation } from '../../../redux/api';
+import { useAddMedicineMutation, useGetRecipeQuery } from '../../../redux/api';
 import styles from './styles.module.scss';
 import { Form, Input, InputNumber, Select, Button, message } from 'antd';
 
@@ -19,6 +19,8 @@ interface AddMedicineProps {
 export const AddMedicine = ({ onSuccess }: AddMedicineProps) => {
     const [form] = Form.useForm();
     const [addMedicine] = useAddMedicineMutation();
+    const { data: recipes } = useGetRecipeQuery();
+    const [type, setType] = useState('');
 
     const onFinish = async (values: AddMedicineForm) => {
         try {
@@ -28,10 +30,11 @@ export const AddMedicine = ({ onSuccess }: AddMedicineProps) => {
                 criticalNorm: values.criticalNorm,
                 quantity: values.quantity,
                 price: values.price,
-                recipeId: values.type === 'manufacturable' ? 1 : undefined
+                recipeId: values.type === 'manufacturable' ? values.recipeId : undefined
             }).unwrap();
             message.success('Лекарство успешно добавлено');
             form.resetFields();
+            setType('');
             onSuccess?.();
         } catch (error) {
             message.error('Ошибка при добавлении лекарства');
@@ -61,11 +64,25 @@ export const AddMedicine = ({ onSuccess }: AddMedicineProps) => {
                     label="Тип"
                     rules={[{ required: true, message: 'Пожалуйста, выберите тип' }]}
                 >
-                    <Select placeholder="Выберите тип">
+                    <Select placeholder="Выберите тип" onChange={setType} allowClear>
                         <Select.Option value="ready">Готовое</Select.Option>
                         <Select.Option value="manufacturable">Приготавливаемое</Select.Option>
                     </Select>
                 </Form.Item>
+
+                {type === 'manufacturable' && (
+                    <Form.Item
+                        name="recipeId"
+                        label="Рецепт"
+                        rules={[{ required: true, message: 'Пожалуйста, выберите рецепт' }]}
+                    >
+                        <Select placeholder="Выберите рецепт">
+                            {recipes?.map(recipe => (
+                                <Select.Option key={recipe.id} value={recipe.id}>{recipe.title}</Select.Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
+                )}
 
                 <Form.Item
                     name="criticalNorm"

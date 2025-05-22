@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useEditMedicineMutation } from '../../../redux/api';
+import { useEditMedicineMutation, useGetRecipeQuery } from '../../../redux/api';
 import styles from './styles.module.scss';
 import { Form, Input, InputNumber, Select, Button, message } from 'antd';
 
@@ -20,10 +20,13 @@ interface EditMedicineProps {
 export const EditMedicine = ({ initialValues, onSuccess }: EditMedicineProps) => {
     const [form] = Form.useForm();
     const [editMedicine] = useEditMedicineMutation();
+    const { data: recipes } = useGetRecipeQuery();
 
     useEffect(() => {
         form.setFieldsValue(initialValues);
     }, [initialValues, form]);
+
+    const type = Form.useWatch('type', form);
 
     const onFinish = async (values: EditMedicineForm) => {
         try {
@@ -35,7 +38,7 @@ export const EditMedicine = ({ initialValues, onSuccess }: EditMedicineProps) =>
                     criticalNorm: values.criticalNorm,
                     quantity: values.quantity,
                     price: values.price,
-                    recipeId: values.type === 'manufacturable' ? (values.recipeId ?? 1) : 0
+                    recipeId: values.type === 'manufacturable' ? values.recipeId : undefined
                 }
             }).unwrap();
             message.success('Лекарство успешно обновлено');
@@ -73,6 +76,20 @@ export const EditMedicine = ({ initialValues, onSuccess }: EditMedicineProps) =>
                         <Select.Option value="manufacturable">Приготавливаемое</Select.Option>
                     </Select>
                 </Form.Item>
+
+                {type === 'manufacturable' && (
+                    <Form.Item
+                        name="recipeId"
+                        label="Рецепт"
+                        rules={[{ required: true, message: 'Пожалуйста, выберите рецепт' }]}
+                    >
+                        <Select placeholder="Выберите рецепт">
+                            {recipes?.map(recipe => (
+                                <Select.Option key={recipe.id} value={recipe.id}>{recipe.title}</Select.Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
+                )}
 
                 <Form.Item
                     name="criticalNorm"
