@@ -230,7 +230,7 @@ export const api = createApi({
         }),
         getOrdersUser: builder.query<getOrder[], { id: number }>({
             query: (id) => ({
-                url: `/orders/user/${id}`,
+                url: `/users/${id}/orders`,
                 method: 'GET'
             }),
             providesTags: ['Product']
