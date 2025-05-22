@@ -3,7 +3,7 @@ import { getOrder, medicines, useGetRecipeQuery, useGetRecipeComponentsQuery, us
 import { useEditOrderStatusMutation } from '../../../redux/api';
 import React, { useState, useMemo } from 'react';
 import { Select, Dropdown, Menu, Button, Input, Modal } from 'antd';
-const statuses = ['Ожидает получения', 'Готов к приготовлению'];
+const statuses = ['Готов к приготовлению', 'Завершен', 'Приготавливается', 'Ожидает получения', 'Ожидает поставки'];
 const types = ['Готовый', 'Приготовляемое'];
 type props = {
     data: getOrder[];
@@ -22,7 +22,6 @@ const filterOptions = [
     { label: 'Приготавливаемое', value: 'manufacturable' },
     { label: 'Готовое', value: 'ready' },
 ];
-
 const RecipeModal = ({ recipeId, onClose }: { recipeId: number, onClose: () => void }) => {
     const { data: recipes } = useGetRecipeQuery();
     const { data: components } = useGetRecipeComponentsQuery();
@@ -180,8 +179,11 @@ export const OrdersAdm = ({ data, medicines }: props) => {
                             </h4>
                             <span className={styles.type}>{order.type === 'ready' ? types[0] : types[1]}</span>
                             <span className={styles.status}>
-                                {order.status === 'waiting_for_receive' && statuses[0]}
-                                {order.status === 'ready_to_preparation' && statuses[1]}
+                                {order.status === 'ready_to_preparation' && statuses[0]}
+                                {order.status === 'completed' && statuses[1]}
+                                {order.status === 'preparing' && statuses[2]}
+                                {order.status === 'waiting_for_receive' && statuses[3]}
+                                {order.status === 'waiting_for_stock' && statuses[4]}
                             </span>
                             {order.status === 'ready_to_preparation' && <button className={styles.button} onClick={e => { e.stopPropagation(); editOrderStatus({ id: order.id, status: 'waiting_for_receive', type: order.type }) }}>Приготовлено</button>}
                             {/* Показываем сумму заказа */}

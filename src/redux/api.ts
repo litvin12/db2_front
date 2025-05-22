@@ -108,6 +108,12 @@ export type addRecipe = {
     createdAt: string;
     updatedAt: string;
 }
+export type addWholesaleOrder = {
+    quantity: number;
+    status: string;
+    createdAt: string;
+    updatedAt: string;
+}
 export const api = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({
@@ -290,19 +296,34 @@ export const api = createApi({
         }),
         setRole: builder.mutation<void, { role: string }>({
             query: ({ role }) => ({
-                url: `roles/set`,
+                url: `roles/set?role=${encodeURIComponent(role)}`,
                 method: 'POST',
-                body: { role }
             }),
             invalidatesTags: ['Product']
         }),
         setRoleExit: builder.mutation<void, void>({
             query: () => ({
-                url: `roles/reset/`,
+                url: 'roles/reset',
                 method: 'POST',
             }),
             invalidatesTags: ['Product']
         }),
+        editWholesaleOrder: builder.mutation<void, { id: number, quantity: number, status: string }>({
+            query: ({ id, quantity, status }) => ({
+                url: `/wholesale-orders/${id}`,
+                method: 'PATCH',
+                body: { quantity, status }
+            }),
+            invalidatesTags: ['Product']
+        }),
+        addWholesaleOrder: builder.mutation<void, addWholesaleOrder>({
+            query: (body) => ({
+                url: '/wholesale-orders',
+                method: 'POST',
+                body,
+            }),
+            invalidatesTags: ['Product']
+        })
     })
 })
 export const {
@@ -331,4 +352,5 @@ export const {
     useAddRecipeMutation,
     useSetRoleMutation,
     useSetRoleExitMutation,
+    useEditWholesaleOrderMutation,
 } = api;

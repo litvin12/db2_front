@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './styles.module.scss';
-import { user } from '../../../redux/api';
+import { user, useSetRoleExitMutation } from '../../../redux/api';
 import { useNavigate } from 'react-router-dom';
 import { OrdersUser } from '../../OrdersUser';
 const menuItems = [
@@ -14,6 +14,7 @@ export const Profile = () => {
     const [selectedMenuItem, setSelectedMenuItem] = React.useState<string | null>('Мой профиль');
     const currentUser = localStorage.getItem('user');
     const CurrentUserData = currentUser ? JSON.parse(currentUser) : null;
+    const [setRoleExit] = useSetRoleExitMutation();
     React.useEffect(() => {
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
@@ -22,6 +23,7 @@ export const Profile = () => {
     }, []);
     const onClickExit = () => {
         localStorage.removeItem('user');
+        setRoleExit();
         navigate('/');
     }
     return (
