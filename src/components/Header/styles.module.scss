@@ -39,3 +39,42 @@
         color: black;
     }
 }
+
+.spinButton {
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: scale(1.1);
+    }
+}
+
+:global(body.spinning) {
+    animation: spin 2s linear infinite;
+}
+
+:global(body.spinning *) {
+    animation: spin 2s linear infinite;
+    transform-origin: center center;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+// Добавляем эффект 3D при вращении
+:global(body.spinning) {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+}
+
+:global(body.spinning *) {
+    transform-style: preserve-3d;
+    backface-visibility: visible;
+}

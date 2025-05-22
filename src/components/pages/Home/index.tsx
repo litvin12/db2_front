@@ -17,7 +17,6 @@ export const Home = () => {
     const dispatch = useDispatch();
     const { showModal } = useSelector((state: RootState) => state.user);
     const { data: orders } = useGetWholeSaleOrdersQuery();
-    console.log(orders);
     const [isChecked, setIsChecked] = useState(false);
     const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
     const [searchQuery, setSearchQuery] = useState('');

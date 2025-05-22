@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './styles.module.scss';
-import { useGetUserQuery } from '../../redux/api';
+import { useGetUserQuery, useSetRoleMutation, useSetRoleExitMutation } from '../../redux/api';
 import { user } from '../../redux/api';
 import { AuthorizationSucces } from '../AuthorizationSucces';
 const roleList = ["Пользователь", "Фармацевт", "Админ"]
@@ -17,6 +17,14 @@ export const SelectRole = ({ onClickClose }: propsModal) => {
     const [selectedRole, setSelectedRole] = React.useState(false);
     const [showSucces, setShowSucces] = React.useState(false);
     const { data, isLoading } = useGetUserQuery();
+    const [setRole] = useSetRoleMutation();
+    const [setRoleExit] = useSetRoleExitMutation();
+    const onClickSignIn = (user: user) => {
+        localStorage.setItem('user', JSON.stringify(user));
+        const user1 = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')!) : null;
+        setRole({ role: user1.role });
+        setShowSucces(true);
+    }
     return (
         <div className={styles.overlay1}>
             <div className={styles.modal}>
@@ -29,10 +37,7 @@ export const SelectRole = ({ onClickClose }: propsModal) => {
                     {selectedRole ?
                         userRole.map(user => (
                             <li key={user.id}
-                                onClick={() => {
-                                    localStorage.setItem('user', JSON.stringify(user));
-                                    setShowSucces(true);
-                                }}>{
+                                onClick={() => onClickSignIn(user)}>{
                                     user.firstName
                                 }</li>
                         ))

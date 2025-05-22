@@ -287,7 +287,22 @@ export const api = createApi({
                 body,
             }),
             invalidatesTags: ['Product']
-        })
+        }),
+        setRole: builder.mutation<void, { role: string }>({
+            query: ({ role }) => ({
+                url: `roles/set`,
+                method: 'POST',
+                body: { role }
+            }),
+            invalidatesTags: ['Product']
+        }),
+        setRoleExit: builder.mutation<void, void>({
+            query: () => ({
+                url: `roles/reset/`,
+                method: 'POST',
+            }),
+            invalidatesTags: ['Product']
+        }),
     })
 })
 export const {
@@ -314,4 +329,6 @@ export const {
     useDeleteWholesaleBatchMutation,
     useEditRecipeMutation,
     useAddRecipeMutation,
+    useSetRoleMutation,
+    useSetRoleExitMutation,
 } = api;
