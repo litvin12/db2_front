@@ -18,9 +18,9 @@ const sortOptions = [
 const filterOptions = [
     { label: 'Все', value: 'all' },
     { label: 'Ожидает приготовления', value: 'ready_to_preparation' },
-    { label: 'Приготовлен', value: 'ready_to_preparation' },
-    { label: 'Приготавливаемое', value: 'manufacturable' },
     { label: 'Готовое', value: 'ready' },
+    { label: 'Ожидает поставки', value: 'waiting_for_stock' },
+    { label: 'Завершен', value: 'completed' },
 ];
 const RecipeModal = ({ recipeId, onClose }: { recipeId: number, onClose: () => void }) => {
     const { data: recipes } = useGetRecipeQuery();
@@ -110,6 +110,8 @@ export const OrdersAdm = ({ data, medicines }: props) => {
                 arr = arr.filter(order => order.type === 'manufacturable');
             } else if (filter === 'ready') {
                 arr = arr.filter(order => order.type === 'ready');
+            } else if (filter === 'waiting_for_stock') {
+                arr = arr.filter(order => order.status === 'waiting_for_stock');
             } else {
                 arr = arr.filter(order => order.status === filter);
             }
